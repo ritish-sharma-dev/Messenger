@@ -95,7 +95,7 @@ export const sendMessage = async (req,res)=>{
         //EMIT THE NEW MESSAGE TO THE RECIEVER'S SOCKET
         const receiverSocketId = userSocketMap[receiverId];
         if (receiverSocketId){
-            io.of("/api").to(receiverSocketId).emit("newMessage", newMessage);
+            io.to(receiverSocketId).emit("newMessage", newMessage);
         }
 
         res.status(200).json(newMessage);

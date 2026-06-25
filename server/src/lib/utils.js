@@ -9,7 +9,7 @@ export const generateToken = (userId, res) => {
     res.cookie("jsonWebToken", token, {
         maxAge: 7 * 24 * 60 * 60 * 1000,
         httpOnly: true,
-        sameSite: "strict",
+        sameSite:  process.env.NODE_ENV !== "development" ? "none" : "strict",
         secure: process.env.NODE_ENV !== "development",
     })
   

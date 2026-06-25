@@ -75,7 +75,8 @@ export const AuthProvider = ({ children }) => {
     const newSocket = io(import.meta.env.VITE_BACKEND_URL, {
         query: {
             userId: userData._id,
-        }
+        },
+        withCredentials: true
     });
     newSocket.connect();
     setSocket(newSocket);
