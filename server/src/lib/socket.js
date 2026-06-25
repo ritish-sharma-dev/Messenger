@@ -8,7 +8,10 @@ const server=http.createServer(app);
 
 // INITIALIZE SOCKET.IO SERVER
 const io = new Server(server, {
-    cors : {origin: "*"}
+    cors : {
+        origin: "*",
+        credentials: true
+    }
 })
 
 // STORE ONLINE USERS

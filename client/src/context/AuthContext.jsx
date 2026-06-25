@@ -77,6 +77,7 @@ export const AuthProvider = ({ children }) => {
             userId: userData._id,
         },
         transports: ["polling"],
+        withCredentials: true
     });
     newSocket.connect();
     setSocket(newSocket);
