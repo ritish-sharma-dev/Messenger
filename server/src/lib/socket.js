@@ -8,14 +8,17 @@ const server=http.createServer(app);
 
 // INITIALIZE SOCKET.IO SERVER
 const io = new Server(server, {
-    cors : {origin: "*"}
+    cors : {
+        origin: process.env.CLIENT_URL || "http://localhost:5173",
+        credentials: true
+    }
 })
 
 // STORE ONLINE USERS
 const userSocketMap = {};
 
 // SOCKET IO CONNECTION HANDLER
-io.of("/api").on("connection",(socket)=>{
+io.on("connection",(socket)=>{
     // READ THEIR USERID FROM THE QUERY SENT BY FRONTEND
     const userId = socket.handshake.query.userId;         
     console.log("User Connected", userId);
@@ -23,13 +26,13 @@ io.of("/api").on("connection",(socket)=>{
 
     // EMIT ONLINE USERS TO ALL CONNECTED CLIENTS
     // TELL ALL CLIENTS WHO IS ONLINE
-    io.of("/api").emit("getOnlineUsers",Object.keys(userSocketMap)); 
+    io.emit("getOnlineUsers",Object.keys(userSocketMap)); 
 
     // HANDLE DISCONNECTION
     socket.on("disconnect",()=>{
         console.log("User Disconnected",userId);
         delete userSocketMap[userId];
-        io.of("/api").emit("getOnlineUsers",Object.keys(userSocketMap));
+        io.emit("getOnlineUsers",Object.keys(userSocketMap));
     })
 });
 

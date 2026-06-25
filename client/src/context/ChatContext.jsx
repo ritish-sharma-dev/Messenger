@@ -15,7 +15,7 @@ export const ChatProvider = ({ children }) => {
     // GET ALL USERS
     const getUsers = async () => {
         try {
-            const { data } = await axiosInstance.get("/messages/users");
+            const { data } = await axiosInstance.get("/api/messages/users");
             setUsers(data.users);
             setUnseenMessages(data.unseenMessages);
         } catch (error) {
@@ -26,7 +26,7 @@ export const ChatProvider = ({ children }) => {
     // GET MESSAGES FOR SELECTED USER
     const getMessages = async (userId) => {
         try {
-            const { data } = await axiosInstance.get(`/messages/${userId}`);
+            const { data } = await axiosInstance.get(`/api/messages/${userId}`);
             setMessages(data.selectedUserMessages);
         } catch (error) {
             toast.error(error.response?.data?.message);
@@ -37,7 +37,7 @@ export const ChatProvider = ({ children }) => {
     const sendMessage = async (messageData) => {
         try {
             const { data } = await axiosInstance.post(
-                `/messages/send/${selectedUser._id}`,
+                `/api/messages/send/${selectedUser._id}`,
                 messageData
             );
             setMessages((prevMessages) => [...prevMessages, data]);
@@ -54,7 +54,7 @@ export const ChatProvider = ({ children }) => {
             if (selectedUser && newMessage.senderId === selectedUser._id) {
                 newMessage.seen = true;
                 setMessages((prevMessages) => [...prevMessages, newMessage]);
-                axiosInstance.put(`/messages/mark/${newMessage._id}`);
+                axiosInstance.put(`/api/messages/mark/${newMessage._id}`);
             } else {
                 setUnseenMessages((prevUnseenMessages) => ({
                     ...prevUnseenMessages,

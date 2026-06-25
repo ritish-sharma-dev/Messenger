@@ -38,7 +38,7 @@ const ChatContainer = () => {
         if (selectedUser) {
             getMessages(selectedUser._id);
         }
-    }, [selectedUser]);
+    }, [messages, selectedUser]);
 
     // SCROLL TO BOTTOM WHEN MESSAGES CHANGE
     useLayoutEffect(() => {

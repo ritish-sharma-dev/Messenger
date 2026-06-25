@@ -15,7 +15,7 @@ const Sidebar = () => {
 
     useEffect(() => {
         getUsers();
-    }, [onlineUsers]);
+    }, [onlineUsers, unseenMessages]);
 
     return (
         <div

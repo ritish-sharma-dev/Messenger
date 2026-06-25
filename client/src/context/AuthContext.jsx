@@ -13,7 +13,7 @@ export const AuthProvider = ({ children }) => {
     // CHECK IF USER IS AUTHENTICATED AND IF SO, SET THE USER DATA AND CONNECT THE SOCKET
     const checkAuth = async () => {
     try {
-        const { data } = await axiosInstance.get("/auth/check");
+        const { data } = await axiosInstance.get("/api/auth/check");
         setAuthUser(data);
         connectSocket(data);
     } catch (error) {
@@ -24,7 +24,7 @@ export const AuthProvider = ({ children }) => {
     // HANDLE USER AUTHENTICATION AND SOCKET CONNECTION
     const signUp = async (credentials) => {
     try {
-        const { data } = await axiosInstance.post("/auth/signup", credentials);
+        const { data } = await axiosInstance.post("/api/auth/signup", credentials);
         setAuthUser(data);
         connectSocket(data);
         toast.success("Account created successfully");
@@ -36,7 +36,7 @@ export const AuthProvider = ({ children }) => {
     // HANDLE USER AUTHENTICATION AND SOCKET CONNECTION
     const login = async (credentials) => {
     try {
-        const { data } = await axiosInstance.post(`/auth/login`, credentials);
+        const { data } = await axiosInstance.post(`/api/auth/login`, credentials);
         setAuthUser(data);
         connectSocket(data);
         toast.success("Logged in successfully");
@@ -48,7 +48,7 @@ export const AuthProvider = ({ children }) => {
     // HANDLE USER LOGOUT AND SOCKET DISCONNECTION
     const logout = async () => {
     try {
-        await axiosInstance.post("/auth/logout");
+        await axiosInstance.post("/api/auth/logout");
         setAuthUser(null);
         toast.success("Logged out successfully");
         if (socket?.connected) socket.disconnect();
@@ -60,7 +60,7 @@ export const AuthProvider = ({ children }) => {
     // HANDLE USER PROFILE UPDATES
     const updateProfile = async (credentials) => {
     try {
-        const { data } = await axiosInstance.put("/auth/update-profile", credentials);
+        const { data } = await axiosInstance.put("/api/auth/update-profile", credentials);
         console.log(data);
         setAuthUser(data);
         toast.success("Profile updated successfully");
@@ -90,13 +90,13 @@ export const AuthProvider = ({ children }) => {
     }, []);
 
     const value = {
-    authUser,
-    onlineUsers,
-    socket,
-    signUp,
-    login,
-    logout,
-    updateProfile
+        authUser,
+        onlineUsers,
+        socket,
+        signUp,
+        login,
+        logout,
+        updateProfile
     }
 
     return (
