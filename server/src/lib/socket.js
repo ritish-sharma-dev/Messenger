@@ -6,10 +6,13 @@ import express from "express";
 const app=express();
 const server=http.createServer(app);
 
+import dotenv from "dotenv";
+dotenv.config();
+
 // INITIALIZE SOCKET.IO SERVER
 const io = new Server(server, {
     cors : {
-        origin: "*",
+        origin: process.env.CLIENT_URL || "http://localhost:5173",
         credentials: true
     }
 })
