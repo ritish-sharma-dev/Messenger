@@ -75,7 +75,8 @@ export const AuthProvider = ({ children }) => {
     const newSocket = io(import.meta.env.VITE_BACKEND_URL, {
         query: {
             userId: userData._id,
-        }
+        },
+        transports: ["polling"],
     });
     newSocket.connect();
     setSocket(newSocket);
